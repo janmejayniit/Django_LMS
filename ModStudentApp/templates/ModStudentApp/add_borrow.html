@@ -1,0 +1,61 @@
+{%extends "layout.html"%}
+{%block content%}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card mt-5">
+                <div class="card-header"><h5 class="text-center font-weight-light my-4">Borrow Book</h5></div>
+                <div class="card-body">
+                    {% if form.errors %}
+                    {% for field in form %}
+                    {% for error in field.errors %}
+                    <div class="alert alert-danger">
+                        <strong>{{ error|escape }}</strong>
+                    </div>
+                    {% endfor %}
+                    {% endfor %}
+                    {%endif%}
+                    {%if messages %}
+                    <ul class="messages">
+                        {% for message in messages %}
+                        <li {%if message.tags %} class="{{ message.tags }}" {%endif%}> {{ message }} </li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                    <form method="post" enctype="multipart/form-data">
+                        {%csrf_token%}
+                        <div class="form-floating mb-3">
+                            {{form.student}}
+                            <label for="">{{form.student.label}}</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            {{form.book}}
+                            <label for="">{{form.book.label}}</label>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3 mb-md-0">
+                                    {{form.issue_date}}
+                                    <label for="">{{form.issue_date.label}}</label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3 mb-md-0">
+                                    {{form.return_day}}
+                                    <label for="">{{form.return_day.label}}</label>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
+                            <button type="submit" class="btn btn-primary">Add</button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+{%endblock%}

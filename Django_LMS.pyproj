@@ -3,6 +3,7 @@
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <Name>Django_LMS</Name>
     <RootNamespace>Django_LMS</RootNamespace>
+    <InterpreterId>MSBuild|venv|$(MSBuildProjectFullPath)</InterpreterId>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -34,12 +35,63 @@
     <Compile Include="Django_LMS\settings.py" />
     <Compile Include="Django_LMS\urls.py" />
     <Compile Include="Django_LMS\wsgi.py" />
+    <Compile Include="ModBookApp\admin.py" />
+    <Compile Include="ModBookApp\apps.py" />
+    <Compile Include="ModBookApp\forms.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ModBookApp\migrations\__init__.py" />
+    <Compile Include="ModBookApp\models.py" />
+    <Compile Include="ModBookApp\tests.py" />
+    <Compile Include="ModBookApp\urls.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ModBookApp\views.py" />
+    <Compile Include="ModBookApp\__init__.py" />
+    <Compile Include="ModStudentApp\admin.py" />
+    <Compile Include="ModStudentApp\apps.py" />
+    <Compile Include="ModStudentApp\forms.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ModStudentApp\models.py" />
+    <Compile Include="ModStudentApp\tests.py" />
+    <Compile Include="ModStudentApp\urls.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ModStudentApp\views.py" />
+    <Compile Include="ModStudentApp\__init__.py" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include=".gitignore" />
+    <Content Include="ModBookApp\templates\ModBookApp\add_new.html" />
+    <Content Include="ModBookApp\templates\ModBookApp\index.html" />
+    <Content Include="ModStudentApp\templates\ModStudentApp\add_borrow.html" />
+    <Content Include="ModStudentApp\templates\ModStudentApp\index.html" />
     <Content Include="requirements.txt" />
+    <Content Include="templates\layout.html" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Django_LMS\" />
+    <Folder Include="ModBookApp\" />
+    <Folder Include="ModBookApp\migrations\" />
+    <Folder Include="ModBookApp\templates\" />
+    <Folder Include="ModBookApp\templates\ModBookApp\" />
+    <Folder Include="ModStudentApp\" />
+    <Folder Include="ModStudentApp\migrations\" />
+    <Folder Include="ModStudentApp\templates\" />
+    <Folder Include="ModStudentApp\templates\ModStudentApp\" />
+    <Folder Include="templates\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Interpreter Include="venv\">
+      <Id>venv</Id>
+      <Version>0.0</Version>
+      <Description>venv (Python 3.12 (64-bit))</Description>
+      <InterpreterPath>Scripts\python.exe</InterpreterPath>
+      <WindowsInterpreterPath>Scripts\pythonw.exe</WindowsInterpreterPath>
+      <PathEnvironmentVariable>PYTHONPATH</PathEnvironmentVariable>
+      <Architecture>X64</Architecture>
+    </Interpreter>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.Django.targets" />
   <!-- Specify pre- and post-build commands in the BeforeBuild and 

@@ -17,10 +17,14 @@ Including another URLconf
 """
 
 # Uncomment next two lines to enable admin:
-#from django.contrib import admin
-#from django.urls import path
+from django.conf import settings
+from django.contrib import admin
+from django.urls import path, include
+from django.conf.urls.static import static
 
 urlpatterns = [
+    path('book/', include('ModBookApp.urls')),
+    path('student/', include('ModStudentApp.urls')),
     # Uncomment the next line to enable the admin:
-    #path('admin/', admin.site.urls)
-]
+    path('admin/', admin.site.urls)
+]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

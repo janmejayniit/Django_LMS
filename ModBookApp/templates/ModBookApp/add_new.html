@@ -1,0 +1,84 @@
+{%extends "layout.html"%}
+{%block content%}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card mt-5">
+                <div class="card-header"><h5 class="text-center font-weight-light my-4">Add New Book</h5></div>
+                <div class="card-body">
+
+                    <form method="post" enctype="multipart/form-data">
+                        {%csrf_token%}
+                        <div class="form-floating mb-3">
+                            {{form.title}}
+                            <label for="">{{form.title.label}}</label>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3 mb-md-0">
+                                    {{form.price}}
+                                    <label for="">{{form.price.label}}</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3 mb-md-0">
+                                    {{form.pages}}
+                                    <label for="">{{form.pages.label}}</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-floating mb-3">
+                            {{form.authors}}
+                            <label for="">{{form.authors.label}}</label>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3 mb-md-0">
+                                    {{form.publication}}
+                                    <label for="">{{form.publication.label}}</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3 mb-md-0">
+                                    {{form.isbn}}
+                                    <label for="">{{form.isbn.label}}</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3 mb-md-0">
+                                    {{form.edition}}
+                                    <label for="">{{form.edition.label}}</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3 mb-md-0">
+                                    {{form.edition_year}}
+                                    <label for="">{{form.edition_year.label}}</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-floating mb-3">
+                            {{form.description}}
+                            <label for="">{{form.description.label}}</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            {{form.book_conver}}
+                            <!--<label for="">{{form.book_conver.label}}</label>-->
+                        </div>
+                        <div class="form-floating mb-3">
+                            {{form.tags}}
+                            <label for="">{{form.tags.label}}</label>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
+                            <button type="submit" class="btn btn-primary">Add</button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+{%endblock%}
