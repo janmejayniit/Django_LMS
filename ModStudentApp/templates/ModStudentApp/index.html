@@ -4,7 +4,7 @@
     <div class="row justify-content-center">
         <div class="col-lg-12">
             <div class="card mt-5">
-                <div class="card-header"><h3 class="text-center font-weight-light my-4">Login</h3></div>
+                <div class="card-header"><h5 class="font-weight-light my-4">Borrow Book List</h5></div>
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table">
@@ -22,22 +22,46 @@
                             <tbody>
                                 {%for bor in borrow_lists%}
                                 <tr>
-                                    <td>{{forloop.counter}}</td>
-                                    <td>{{ bor.student.first_name }} {{bor.student.last_name}}</td>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>{{ bor.student.first_name }} {{ bor.student.last_name }}</td>
                                     <td>{{ bor.book.title }}</td>
                                     <td>{{ bor.issue_date }}</td>
-                                    <td>{{bor.returnning_book_day}}</td>
-                                    <td>{{bor.return_book_flag}}</td>
-                                    <td></td>
+                                    <td>{{ bor.returnning_book_day }}</td>
+                                    <td>{{ bor.return_book_flag }}</td>
+                                    <td>
+                                        {%if bor.return_date is None%}
+                                        <a href="javascript:;" onClick="returnBorrowBook({{bor.id}})" class="btn btn-primary btn-sm">Return</a>
+                                        {%endif%}
+                                    </td>
                                 </tr>
                                 {%endfor%}
                             </tbody>
                         </table>
                     </div>
-                    
-                </div>                 
+
+                </div>
             </div>
         </div>
     </div>
 </div>
+{%endblock%}
+{%block script%}
+<script>
+    const returnBorrowBook = (bor_id) => {
+
+         
+       try
+        {
+           const response = fetch(`/student/return_book/${bor_id}`);
+            if (!response.ok) {
+                throw new Error('Response status: ${response.status}');
+            }
+            const json = response.json();
+            console.log(json);
+        }catch (error) {
+            console.log(error.message);
+        }
+    }
+</script>
+
 {%endblock%}

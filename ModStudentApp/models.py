@@ -18,6 +18,11 @@ class Student(models.Model):
     def __str__(self):
         return f'{self.first_name} {self.last_name}'
 
+    @property
+    def user_cover(self):
+       return self.photo if self.photo else 'student_photo/Male_Avatar.jpg'
+
+
 class BookBorrow(models.Model):
     class FineFeeReasons(models.TextChoices):
         DELAY = 'Delay In Return'

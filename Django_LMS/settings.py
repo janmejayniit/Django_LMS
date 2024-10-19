@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'ModBookApp',
     'ModStudentApp',
+    'qr_code',
 ]
 
 # Middleware framework

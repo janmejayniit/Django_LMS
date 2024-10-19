@@ -66,7 +66,10 @@
     <Content Include="ModBookApp\templates\ModBookApp\add_new.html" />
     <Content Include="ModBookApp\templates\ModBookApp\index.html" />
     <Content Include="ModStudentApp\templates\ModStudentApp\add_borrow.html" />
+    <Content Include="ModStudentApp\templates\ModStudentApp\add_student.html" />
     <Content Include="ModStudentApp\templates\ModStudentApp\index.html" />
+    <Content Include="ModStudentApp\templates\ModStudentApp\student_card.html" />
+    <Content Include="ModStudentApp\templates\ModStudentApp\student_list.html" />
     <Content Include="requirements.txt" />
     <Content Include="templates\layout.html" />
   </ItemGroup>
