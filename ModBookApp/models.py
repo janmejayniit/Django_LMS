@@ -22,3 +22,19 @@ class Book(models.Model):
     def __str__(self):
         return f'{self.title}'
 
+class BookStocks(models.Model):
+    book = models.ForeignKey(Book, on_delete=models.CASCADE)
+    total_books = models.PositiveIntegerField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return str(self.total_books)
+
+    @property
+    def available_books(self):
+       from ModStudentApp.models import BookBorrow
+       total_borrow_books =  BookBorrow.objects.filter(id=self.book.id, return_date=None).count()
+       return self.total_books-total_borrow_books
+
+

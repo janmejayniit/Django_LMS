@@ -1,12 +1,12 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import Book
+from .models import Book, BookStocks
 # from django.contrib.auth.forms import UserCreationForm
 
 class BookForm(forms.ModelForm):
     class Meta:
         model = Book
-        fields = ['title',  'price',  'pages',  'authors',  'publication',  'isbn',  'edition',  'edition_year',  'description',  'book_conver',  'tags' ]
+        fields = ['title',  'price',  'pages',  'authors',  'publication',  'isbn',  'edition',  'edition_year',  'description',  'book_conver',  'tags']
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control'}),
             'price': forms.NumberInput(attrs={'class':'form-control'}),
@@ -24,6 +24,16 @@ class BookForm(forms.ModelForm):
             'title':'Book Name',
             'book_conver':'Upload Book Cover Image'
         }
+        errors={
+            'title':'Book Name is required'
+            }
+
+        def clean(self):
+            if self.len(self.title)<1:
+                raise forms.ValidationError('Title is required')
+
+
+
 
 # class BookForm(forms.Form):
 #     title = forms.CharField(label='Book Full Name',widget=forms.TextInput(attrs={'class': 'form-control'}),required=True)
@@ -38,3 +48,14 @@ class BookForm(forms.ModelForm):
 #     book_cover = forms.CharField(label='Upload Book Cover Image', widget=forms.FileInput(attrs={'class':'form-control'}), required=True)
 #     tags = forms.CharField(label='Tags for searching', widget=forms.TextInput(attrs={'class':'form-control'}), required=True)
 
+class BookStockForm(forms.ModelForm):
+    class Meta:
+        model=BookStocks
+        fields=['total_books']
+        widgets = {
+            'total_books':forms.NumberInput(attrs={'class':'form-control'}),    
+        }
+
+        def clean(self):
+            if self.total_books<1:
+                raise forms.ValidationError('Total book should not be lesst than zero.')

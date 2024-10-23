@@ -21,10 +21,26 @@ from django.conf import settings
 from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
+from django.views.defaults import page_not_found
 
 urlpatterns = [
+    path('',include('ModAuthApp.urls')),
     path('book/', include('ModBookApp.urls')),
     path('student/', include('ModStudentApp.urls')),
     # Uncomment the next line to enable the admin:
     path('admin/', admin.site.urls)
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
+
+# def error_404(request, exception):
+#     template_name = '404.html'
+#     return page_not_found(request, exception, template_name=template_name)
+ 
+# def error_500(request):
+#     template_name = '500.html'
+#     return page_not_found(request, template_name=template_name)
+
+
+# handler404 = 'custom_views.handler404'
+# handler500 = 'custom_views.handler500'

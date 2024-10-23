@@ -35,6 +35,16 @@
     <Compile Include="Django_LMS\settings.py" />
     <Compile Include="Django_LMS\urls.py" />
     <Compile Include="Django_LMS\wsgi.py" />
+    <Compile Include="ModAuthApp\admin.py" />
+    <Compile Include="ModAuthApp\apps.py" />
+    <Compile Include="ModAuthApp\migrations\__init__.py" />
+    <Compile Include="ModAuthApp\models.py" />
+    <Compile Include="ModAuthApp\tests.py" />
+    <Compile Include="ModAuthApp\urls.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ModAuthApp\views.py" />
+    <Compile Include="ModAuthApp\__init__.py" />
     <Compile Include="ModBookApp\admin.py" />
     <Compile Include="ModBookApp\apps.py" />
     <Compile Include="ModBookApp\forms.py">
@@ -42,6 +52,9 @@
     </Compile>
     <Compile Include="ModBookApp\migrations\__init__.py" />
     <Compile Include="ModBookApp\models.py" />
+    <Compile Include="ModBookApp\mybarcode.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="ModBookApp\tests.py" />
     <Compile Include="ModBookApp\urls.py">
       <SubType>Code</SubType>
@@ -63,18 +76,30 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include=".gitignore" />
+    <Content Include="ModAuthApp\templates\ModAuthApp\index.html" />
     <Content Include="ModBookApp\templates\ModBookApp\add_new.html" />
     <Content Include="ModBookApp\templates\ModBookApp\index.html" />
+    <Content Include="ModBookApp\templates\ModBookApp\print_book_barcode.html">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="ModStudentApp\templates\ModStudentApp\add_borrow.html" />
     <Content Include="ModStudentApp\templates\ModStudentApp\add_student.html" />
     <Content Include="ModStudentApp\templates\ModStudentApp\index.html" />
     <Content Include="ModStudentApp\templates\ModStudentApp\student_card.html" />
     <Content Include="ModStudentApp\templates\ModStudentApp\student_list.html" />
     <Content Include="requirements.txt" />
+    <Content Include="templates\403.html" />
+    <Content Include="templates\404.html" />
+    <Content Include="templates\500.html" />
+    <Content Include="templates\auth\signin.html" />
     <Content Include="templates\layout.html" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Django_LMS\" />
+    <Folder Include="ModAuthApp\" />
+    <Folder Include="ModAuthApp\migrations\" />
+    <Folder Include="ModAuthApp\templates\" />
+    <Folder Include="ModAuthApp\templates\ModAuthApp\" />
     <Folder Include="ModBookApp\" />
     <Folder Include="ModBookApp\migrations\" />
     <Folder Include="ModBookApp\templates\" />
@@ -84,6 +109,7 @@
     <Folder Include="ModStudentApp\templates\" />
     <Folder Include="ModStudentApp\templates\ModStudentApp\" />
     <Folder Include="templates\" />
+    <Folder Include="templates\auth\" />
   </ItemGroup>
   <ItemGroup>
     <Interpreter Include="venv\">

@@ -6,8 +6,11 @@ from django.http import JsonResponse
 from .forms import BookBorrowForm, StudentForm
 from .models import BookBorrow, Student
 from django.core.paginator import Paginator
+from django.contrib.auth.decorators import login_required
+
 
 # Create your views here.
+@login_required
 def addNewStudent(request):
     if request.method=='POST':
         form = StudentForm(request.POST, request.FILES)
@@ -20,6 +23,7 @@ def addNewStudent(request):
         form = StudentForm()
         return render(request, 'ModStudentApp/add_student.html', {'form':form})
 
+@login_required
 def studentList(request):
     student_lists = Student.objects.order_by('-pk').all()
     paginator = Paginator(student_lists, 20)
@@ -28,15 +32,18 @@ def studentList(request):
 
     return render(request, 'ModStudentApp/student_list.html',{'students_list':page_obj})
 
+@login_required
 def studentCard(request, sid):
     student = Student.objects.get(id=sid)
     qr_code_url='http://127.0.0.1:8000/student/'+str(sid)
     return render(request, 'ModStudentApp/student_card.html', {'student':student,'qr_code_url':qr_code_url})
 
+@login_required
 def borrowBookList(request):
     borrow_lists = BookBorrow.objects.order_by('-issue_date').all()
     return render(request,'ModStudentApp/index.html',{'borrow_lists':borrow_lists})
 
+@login_required
 def addBorrowBook(request):
     if request.method=='POST':
         form = BookBorrowForm(request.POST)
@@ -50,6 +57,7 @@ def addBorrowBook(request):
         form = BookBorrowForm()
         return render(request,'ModStudentApp/add_borrow.html', {'form':form})
 
+@login_required
 def returnBorrowBook(request, id):
     borrow_book = BookBorrow.objects.filter(id=id).first()
     if borrow_book:

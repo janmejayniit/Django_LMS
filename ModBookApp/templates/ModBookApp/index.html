@@ -30,7 +30,7 @@
                                     <td>{{book.isbn}}</td>
                                     <td>{{book.tags}}</td>
                                     <td>
-                                        <a href="" class="btn btn-primary btn-sm">Borrow</a>
+                                        <a href="{%url 'print_book_barcode'%}" class="btn btn-primary btn-sm">Print</a>
                                     </td>
                                 </tr>
                                 {%endfor%}

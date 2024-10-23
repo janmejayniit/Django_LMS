@@ -2,7 +2,10 @@ from datetime import date, datetime, timedelta
 from tkinter import CASCADE
 from django.db import models
 
-from ModBookApp.models import Book
+
+# from django.apps import apps
+
+# Book = apps.get_model('ModBookApp', 'Book')
 
 # Create your models here.
 class Student(models.Model):
@@ -23,7 +26,9 @@ class Student(models.Model):
        return self.photo if self.photo else 'student_photo/Male_Avatar.jpg'
 
 
+
 class BookBorrow(models.Model):
+    from ModBookApp.models import Book
     class FineFeeReasons(models.TextChoices):
         DELAY = 'Delay In Return'
         LOSS = 'Book Loss'
