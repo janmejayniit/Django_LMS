@@ -61,6 +61,19 @@
     </Compile>
     <Compile Include="ModBookApp\views.py" />
     <Compile Include="ModBookApp\__init__.py" />
+    <Compile Include="ModBorrowApp\admin.py" />
+    <Compile Include="ModBorrowApp\apps.py" />
+    <Compile Include="ModBorrowApp\forms.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ModBorrowApp\migrations\__init__.py" />
+    <Compile Include="ModBorrowApp\models.py" />
+    <Compile Include="ModBorrowApp\tests.py" />
+    <Compile Include="ModBorrowApp\urls.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ModBorrowApp\views.py" />
+    <Compile Include="ModBorrowApp\__init__.py" />
     <Compile Include="ModStudentApp\admin.py" />
     <Compile Include="ModStudentApp\apps.py" />
     <Compile Include="ModStudentApp\forms.py">
@@ -75,6 +88,7 @@
     <Compile Include="ModStudentApp\__init__.py" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include=".env" />
     <Content Include=".gitignore" />
     <Content Include="ModAuthApp\templates\ModAuthApp\index.html" />
     <Content Include="ModBookApp\templates\ModBookApp\add_new.html" />
@@ -82,7 +96,8 @@
     <Content Include="ModBookApp\templates\ModBookApp\print_book_barcode.html">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="ModStudentApp\templates\ModStudentApp\add_borrow.html" />
+    <Content Include="ModBorrowApp\templates\ModBorrowApp\index.html" />
+    <Content Include="ModBorrowApp\templates\ModBorrowApp\add_borrow.html" />
     <Content Include="ModStudentApp\templates\ModStudentApp\add_student.html" />
     <Content Include="ModStudentApp\templates\ModStudentApp\index.html" />
     <Content Include="ModStudentApp\templates\ModStudentApp\student_card.html" />
@@ -104,6 +119,10 @@
     <Folder Include="ModBookApp\migrations\" />
     <Folder Include="ModBookApp\templates\" />
     <Folder Include="ModBookApp\templates\ModBookApp\" />
+    <Folder Include="ModBorrowApp\" />
+    <Folder Include="ModBorrowApp\migrations\" />
+    <Folder Include="ModBorrowApp\templates\" />
+    <Folder Include="ModBorrowApp\templates\ModBorrowApp\" />
     <Folder Include="ModStudentApp\" />
     <Folder Include="ModStudentApp\migrations\" />
     <Folder Include="ModStudentApp\templates\" />

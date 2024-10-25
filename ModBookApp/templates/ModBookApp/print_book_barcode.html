@@ -1,52 +1,131 @@
 {%extends "layout.html"%}
 {%load static%}
-<link href="https://fonts.googleapis.com/css?family=Libre+Barcode+39+Extended+Text" rel="stylesheet">
-<link rel="stylesheet" href="{% static 'code-39-font-master/code39_all.css' %}" />
+<style>
+    img, svg {
+        vertical-align: baseline;
+    }
+</style>
+
 {%block content%}
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-lg-6">
+    <div class="row">
+        <div class="col-lg-12">
             <div class="card mt-5">
                 <div class="card-header"><h5 class="text-center font-weight-light my-4">Print Book Barcode</h5></div>
                 <div class="card-body">
-                    <form method="post" id="form" enctype="multipart/form-data">
+                    <form method="post" id="form_barcode">
                         {%csrf_token%}
-                        <div class="form-floating mb-3">
-                            <select class="form-control" name="book_isbn">
-                                <option>-----</option>
-                                {%for book in books_list%}
-                                <option value="{{book.isbn}}">{{book.title}}</option>
-                                {%endfor%}
-                            </select>
-                            <label for="">Book Name</label>
-                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3 mb-md-0">
+                                    <select class="form-control" name="book_isbn">
+                                        <option>-----</option>
+                                        {%for book in books_list%}
+                                        <option value="{{book.isbn}}">{{book.title}}</option>
+                                        {%endfor%}
+                                    </select>
+                                    <label for="">Book Name</label>
+                                </div>
+                            </div>
 
-                        <div class="form-floating mb-3">
-                            <input type="number" name="total_number" class="form-control" min="1" max="1000" />
-                            <label for="">Total Number of barcode</label>
-                        </div>
+                            <div class="col-md-3">
+                                <div class="form-floating mb-3 mb-md-0">
+                                    <input type="number" name="total_number" class="form-control" min="1" max="1000" />
+                                    <label for="">Total Number of barcode</label>
 
-                        <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
-                            <button type="submit" id="sbtBtn" class="btn btn-primary">Proceed to print</button>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                
+                                <button type="submit" id="sbtBtn" class="btn btn-dark">Generate Barcodes</button>
+                                 
+                            </div>
+
                         </div>
+ 
                     </form>
-                    <div><class ="code_39_S">I'm generated with static files!</div>
+                    
                 </div>
             </div>
         </div>
-    </div>
+        <div class="col-lg-12">
+            <div class="card mt-5">
+                <div class="card-header">
+                    <a href="javascript:;" id="" class="btn btn-dark btn-sm" onclick="printDiv()"><i class="fa fa-print"></i></a>
+                </div>
+                <div class="card-body" id="barcode_layout">
+                     
+                </div>
+
+            </div>
+        </div>
 </div>
 {%endblock%}
 {%block script%}
 <script>
-    function logSubmit(event) {
+    const logSubmit = async (event) => {
 
         event.preventDefault();
-        fetch('/book/')
+        const form = document.querySelector("#form_barcode");
+        formData = new FormData(form);
+
+        try
+        {
+            const response = await fetch("/book/generate_barcode/", {method: "POST",body: formData});
+
+            const response_data = await response.json();
+
+            if (response_data.total_number > 0) {
+                const svg_barcode_img = response_data.svg;
+                let barcodes = '';
+
+                for (let i = 0; i < response_data.total_number; i++) {
+                    barcodes += svg_barcode_img;
+                }
+
+                const layout_barcode = document.getElementById('barcode_layout');
+                layout_barcode.innerHTML = barcodes;
+
+                const svg_div = document.getElementsByTagName('svg');
+                for (let i = 0; i < svg_div.length; i++) {
+                    svg_div[i].style.borderBottom = '1.5px dashed'; // Apply to each SVG element
+                }
+            }
+
+        }
+        catch (e)
+        {
+            console.error(e);
+        }
     }
 
-    const form = document.getElementById("form");
+    const form = document.getElementById("form_barcode");
     form.addEventListener("submit", logSubmit);
+
+</script>
+
+<script>
+
+        function printDiv() {
+            let divContents = document.getElementById("barcode_layout").innerHTML;
+            let printWindow = window.open('', '', 'height=1500, width=1000');
+            printWindow.document.open();
+            printWindow.document.write(`
+            <html>
+                <head>
+                    <title></title>
+                    <style>
+                    </style>    
+                </head>
+                <body>
+
+                    ${divContents}
+                </body>
+            </html>
+            `);
+            printWindow.document.close();
+            printWindow.print();
+        }
 
 </script>
 {%endblock%}

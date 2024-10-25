@@ -27,7 +27,17 @@
                                     <td>{{ bor.book.title }}</td>
                                     <td>{{ bor.issue_date }}</td>
                                     <td>{{ bor.returnning_book_day }}</td>
-                                    <td>{{ bor.return_book_flag }}</td>
+                                    <td>
+                                        {%if bor.return_book_flag == "Pending"%}
+                                        <label class="badge text-bg-warning">{{ bor.return_book_flag }}</label>
+                                        {%elif bor.return_book_flag == "Early Submit"%}
+                                        <label class="badge text-bg-success">{{ bor.return_book_flag }}</label>
+                                        {%elif bor.return_book_flag == "On Time Submit"%}
+                                        <label class="badge text-bg-success">{{ bor.return_book_flag }}</label>
+                                        {%elif bor.return_book_flag == "Late Submit"%}
+                                        <label class="badge text-bg-danger">{{bor.return_book_flag}}</label>
+                                        {%endif%}
+                                    </td>
                                     <td>
                                         {%if bor.return_date is None%}
                                         <a href="javascript:;" onClick="returnBorrowBook({{bor.id}})" class="btn btn-primary btn-sm">Return</a>

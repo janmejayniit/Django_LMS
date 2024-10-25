@@ -3,6 +3,7 @@ from .models import Book, BookStocks
 from .forms import BookForm, BookStockForm
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
 
 
 # Create your views here.
@@ -27,7 +28,7 @@ def addNew(request):
 @login_required
 def listBook(request):
     book_lists = Book.objects.order_by('-pk').all()
-    paginator = Paginator(book_lists, 2)
+    paginator = Paginator(book_lists, 10)
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
 
@@ -36,14 +37,23 @@ def listBook(request):
 
 @login_required
 def printBookBarcode(request):
-    from .mybarcode import MyBarcodeDrawing
-    d = MyBarcodeDrawing("HELLO WORLD")
-    binaryStuff = d.asString('gif')
-    return HttpResponse(binaryStuff, 'image/gif')
+    
+    books_list = Book.objects.order_by('-pk').all()
+    return render(request, 'ModBookApp/print_book_barcode.html',{'books_list':books_list})
 
-    # books_list = Book.objects.order_by('-pk').all()
-    # return render(request, 'ModBookApp/print_book_barcode.html',{'books_list':books_list})
+def generateBarcode(request):
+    book_isbn = request.POST.get('book_isbn','')
+    total_number = request.POST.get('total_number','')
 
-# def generateBarcode(request):
-#     book_isbn = request.form.data('book_isbn')
-#     total_number = request.form.data('total_number')
+    from io import BytesIO
+    import barcode
+
+    rv = BytesIO()
+    # code = barcode.get('code128', book_isbn, writer=barcode.writer.SVGWriter())
+    code = barcode.get('code39', book_isbn, writer=barcode.writer.SVGWriter())
+    code.write(rv)
+
+    rv.seek(0)
+    svg = rv.read()
+
+    return JsonResponse({'svg':svg.decode('utf-8'),'total_number':total_number})

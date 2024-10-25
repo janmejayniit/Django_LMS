@@ -27,6 +27,7 @@ urlpatterns = [
     path('',include('ModAuthApp.urls')),
     path('book/', include('ModBookApp.urls')),
     path('student/', include('ModStudentApp.urls')),
+     path('borrow/', include('ModBorrowApp.urls')),
     # Uncomment the next line to enable the admin:
     path('admin/', admin.site.urls)
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
