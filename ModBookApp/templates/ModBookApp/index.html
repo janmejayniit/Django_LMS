@@ -5,7 +5,10 @@
     <div class="row justify-content-center">
         <div class="col-lg-12">
             <div class="card mt-5">
-                <div class="card-header"><h5 class="text-center font-weight-light my-4">Book List</h5></div>
+                <div class="card-header">
+                    <div class="float-start"><h5 class="text-center font-weight-light">Book List</h5></div>
+                    <div class="float-end middle"><a href="{%url 'book_export_csv'%}" class="btn btn-dark btn-sm"><i class="fa fa-file-excel" aria-hidden="true"></i></a></div>
+                </div>
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table">
@@ -16,7 +19,7 @@
                                     <th>Title</th>
                                     <th>Author</th>
                                     <th>ISBN</th>
-                                    <th>Tags</th>
+                                    <!--<th>Tags</th>-->
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -28,8 +31,12 @@
                                     <td>{{book.title}}</td>
                                     <td>{{book.authors}}</td>
                                     <td>{{book.isbn}}</td>
-                                    <td>{{book.tags}}</td>
+                                    <!--<td>{{book.tags}}</td>-->
                                     <td>
+                                        <div class="btn-group">
+                                            <a href="{%url 'book_update' book.id%}" class="btn btn-dark btn-sm"><i class="fa fa-edit text-white"></i></a>
+                                            <a href="{%url 'print_book_barcode'%}" class="btn btn-dark btn-sm"><i class="fa fa-barcode text-white"></i></a>
+                                        </div>
                                         
                                     </td>
                                 </tr>

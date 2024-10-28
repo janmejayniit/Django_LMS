@@ -1,22 +1,25 @@
 {%extends "layout.html"%}
 {%load static%}
+
 <style>
     img, svg {
         vertical-align: baseline;
     }
 </style>
 
+
 {%block content%}
 <div class="container">
     <div class="row">
         <div class="col-lg-12">
             <div class="card mt-5">
-                <div class="card-header"><h5 class="text-center font-weight-light my-4">Print Book Barcode</h5></div>
+                <div class="card-header"><h5 class="text-center font-weight-light">Print Book Barcode</h5></div>
                 <div class="card-body">
                     <form method="post" id="form_barcode">
                         {%csrf_token%}
                         <div class="row mb-3">
                             <div class="col-md-6">
+                                
                                 <div class="form-floating mb-3 mb-md-0">
                                     <select class="form-control" name="book_isbn">
                                         <option>-----</option>
@@ -36,15 +39,16 @@
                                 </div>
                             </div>
                             <div class="col-md-3">
-                                
                                 <button type="submit" id="sbtBtn" class="btn btn-dark">Generate Barcodes</button>
-                                 
                             </div>
 
                         </div>
- 
+                        <div class="form-floating mb-3 mb-md-0">
+                            <!--<input class="form-control" id="autoComplete" type="search" dir="ltr" spellcheck=false autocorrect="off" autocomplete="off" autocapitalize="off">-->
+                            <!--<label for="">Search Book Title</label>-->
+                        </div>
                     </form>
-                    
+
                 </div>
             </div>
         </div>
@@ -54,79 +58,120 @@
                     <a href="javascript:;" id="" class="btn btn-dark btn-sm" onclick="printDiv()"><i class="fa fa-print"></i></a>
                 </div>
                 <div class="card-body" id="barcode_layout">
-                     
+
                 </div>
 
             </div>
         </div>
-</div>
-{%endblock%}
-{%block script%}
-<script>
-    const logSubmit = async (event) => {
+    </div>
+    {%endblock%}
+    {%block script%}
+    <script>
+        const logSubmit = async (event) => {
 
-        event.preventDefault();
-        const form = document.querySelector("#form_barcode");
-        formData = new FormData(form);
+            event.preventDefault();
+            const form = document.querySelector("#form_barcode");
+            formData = new FormData(form);
 
-        try
-        {
-            const response = await fetch("/book/generate_barcode/", {method: "POST",body: formData});
+            try {
+                const response = await fetch("/book/generate_barcode/", { method: "POST", body: formData });
 
-            const response_data = await response.json();
+                const response_data = await response.json();
 
-            if (response_data.total_number > 0) {
-                const svg_barcode_img = response_data.svg;
-                let barcodes = '';
+                if (response_data.total_number > 0) {
+                    const svg_barcode_img = response_data.svg;
+                    let barcodes = '';
 
-                for (let i = 0; i < response_data.total_number; i++) {
-                    barcodes += svg_barcode_img;
+                    for (let i = 0; i < response_data.total_number; i++) {
+                        barcodes += svg_barcode_img;
+                    }
+
+                    const layout_barcode = document.getElementById('barcode_layout');
+                    layout_barcode.innerHTML = barcodes;
+
+                    const svg_div = document.getElementsByTagName('svg');
+                    for (let i = 0; i < svg_div.length; i++) {
+                        svg_div[i].style.borderBottom = '1.5px dashed'; // Apply to each SVG element
+                    }
                 }
 
-                const layout_barcode = document.getElementById('barcode_layout');
-                layout_barcode.innerHTML = barcodes;
-
-                const svg_div = document.getElementsByTagName('svg');
-                for (let i = 0; i < svg_div.length; i++) {
-                    svg_div[i].style.borderBottom = '1.5px dashed'; // Apply to each SVG element
-                }
             }
-
+            catch (e) {
+                console.error(e);
+            }
         }
-        catch (e)
-        {
-            console.error(e);
-        }
-    }
 
-    const form = document.getElementById("form_barcode");
-    form.addEventListener("submit", logSubmit);
+        const form = document.getElementById("form_barcode");
+        form.addEventListener("submit", logSubmit);
 
-</script>
+    </script>
 
-<script>
+    <script>
 
         function printDiv() {
             let divContents = document.getElementById("barcode_layout").innerHTML;
             let printWindow = window.open('', '', 'height=1500, width=1000');
             printWindow.document.open();
             printWindow.document.write(`
-            <html>
-                <head>
-                    <title></title>
-                    <style>
-                    </style>    
-                </head>
-                <body>
+                    <html>
+                        <head>
+                            <title></title>
+                            <style>
+                            </style>
+                        </head>
+                        <body>
 
-                    ${divContents}
-                </body>
-            </html>
-            `);
+                            ${divContents}
+                        </body>
+                    </html>
+                    `);
             printWindow.document.close();
             printWindow.print();
         }
 
-</script>
-{%endblock%}
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tarekraafat-autocomplete.js/10.2.9/autoComplete.min.js"></script>
+
+    <script>
+        const autoCompleteJS = new autoComplete({
+            selector: "#autoComplete",
+            placeHolder: "Search for Title...",
+            data: {
+                src: async (query) => {
+                    try {
+                        const source = await fetch(`/book/search/title/?query=${query}`);
+                        const data = await source.json();
+                        return data.arr_list;
+                    } catch (error) {
+                        return error;
+                    }
+                },
+                keys: ["title"]
+            },
+            resultsList: {
+                element: (list, data) => {
+                    if (!data.results.length) {
+                        const message = document.createElement("div");
+                        message.setAttribute("class", "no_result");
+                        message.innerHTML = `<span>Found No Results for "${data.query}"</span>`;
+                        list.prepend(message);
+                    }
+                },
+                noResults: true,
+            },
+            resultItem: {
+                highlight: true
+            },
+            events: {
+                input: {
+                    selection: (event) => {
+                        const selection = event.detail.selection.value;
+                        autoCompleteJS.input.value = selection;
+                    }
+                }
+            }
+        });
+
+    </script>
+    {%endblock%}
 

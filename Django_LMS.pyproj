@@ -96,12 +96,14 @@
     <Content Include="ModBookApp\templates\ModBookApp\print_book_barcode.html">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="ModBookApp\templates\ModBookApp\update_book.html" />
     <Content Include="ModBorrowApp\templates\ModBorrowApp\index.html" />
     <Content Include="ModBorrowApp\templates\ModBorrowApp\add_borrow.html" />
     <Content Include="ModStudentApp\templates\ModStudentApp\add_student.html" />
     <Content Include="ModStudentApp\templates\ModStudentApp\index.html" />
     <Content Include="ModStudentApp\templates\ModStudentApp\student_card.html" />
     <Content Include="ModStudentApp\templates\ModStudentApp\student_list.html" />
+    <Content Include="ModStudentApp\templates\ModStudentApp\update_student.html" />
     <Content Include="requirements.txt" />
     <Content Include="templates\403.html" />
     <Content Include="templates\404.html" />

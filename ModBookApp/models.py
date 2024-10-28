@@ -22,6 +22,10 @@ class Book(models.Model):
     def __str__(self):
         return f'{self.title}'
 
+    @property
+    def total_books(self):
+        return BookStocks.objects.only('total_books').get(book=self.id).total_books
+
 class BookStocks(models.Model):
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
     total_books = models.PositiveIntegerField()

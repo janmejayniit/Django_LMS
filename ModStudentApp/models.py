@@ -9,7 +9,7 @@ from django.db import models
 
 # Create your models here.
 class Student(models.Model):
-    first_name =  models.TextField(max_length=150)
+    first_name =  models.TextField(max_length=150,error_messages='First Name is required')
     last_name =  models.TextField(max_length=150)
     email = models.EmailField(max_length=240, unique=True)
     phone = models.BigIntegerField(unique=True)
